@@ -1,0 +1,57 @@
+paths:
+  /register:
+    post:
+      summary: Register phone number
+      description: Register phone number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phoneNumber:
+                  type: string
+                  example: 828888888
+      responses:
+        200:
+          description: Register service responses.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Verification code send to your phone number
+                  token:
+                    type: string
+                    example: abc2222aaaa
+  /verify:
+    post:
+      summary: Verify the phone number
+      description: Verify the phone number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phoneNumber:
+                  type: string
+                  example: 828888888
+                verificationCode:
+                  type: string
+                  example: 8021
+      responses:
+        200:
+          description: Verify service responses.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Verified successfully

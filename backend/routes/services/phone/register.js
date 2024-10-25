@@ -14,12 +14,14 @@ function createVerificationCode() {
 }
 
 /**
- * Handle input request
+ * Handle phone number register request
  *
- * @param {*} req Request object
- * @param {*} res Response object
+ * @param {Object} req - The Express request object.
+ * @param {Object} req.body - The body of the request, containing user data.
+ * @param {string} req.body.phoneNumber - The phone number provided by the user.
+ * @param {Object} res - The Express response object.
  *
- * @return {any}
+ * @return {*}
  */
 async function handleRequest(req, res) {
   try {
@@ -31,14 +33,25 @@ async function handleRequest(req, res) {
     //   to: '+919747624733',
     //   body: 'Message 1',
     // });
+    const dataObj = await PhoneModal.findOne(
+      { phoneNumber, isVerified: true },
+      { _id: 0, phoneNumber: 1, isVerified: 1 }
+    );
+    console.log({ dataObj1: dataObj });
+    if (dataObj) {
+      throw new Error('This phone number is already verified.');
+    }
     const phoneTbl = new PhoneModal({
       phoneNumber,
-      verificationCode: createVerificationCode,
+      verificationCode: createVerificationCode(),
     });
 
     phoneTbl.save();
 
-    res.json({ message: 'Verification code send to your phone number' });
+    res.json({
+      message:
+        'A verification code has been sent to your phone number. Please enter the code to proceed.',
+    });
   } catch (errorObj) {
     console.log({ errorObj });
     const errMsg =

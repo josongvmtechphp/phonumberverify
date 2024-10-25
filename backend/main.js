@@ -3,12 +3,12 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
-import YAML from 'yamljs';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import { connectDb } from './mongoDb.js';
 import PhoneRouter from './routes/phone.js';
+import swaggerDocument from './swagger/swagger.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const envfile = path.join(__dirname, './.env');
@@ -21,8 +21,6 @@ connectDb();
 app.use(bodyParser.json());
 app.use('/', PhoneRouter);
 app.use(cors());
-
-const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen('8001', (err) => {
