@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node main.js",
-    "format": "prettier --write '**/*.js'"
+    "format": "prettier --write '**/*.js'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -23,12 +25,26 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "install-peerdeps": "^3.0.3",
     "mongodb": "^6.10.0",
+    "mongoose": "^8.7.2",
     "swagger-ui-express": "^5.0.1",
     "twilio": "^5.3.4",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "eslint": "^8.57.1",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^50.4.3",
+    "eslint-plugin-jsx-a11y": "^6.10.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "globals": "^15.11.0",
     "prettier": "^3.3.3"
   }
 }

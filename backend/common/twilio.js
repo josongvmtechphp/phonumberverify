@@ -1,14 +1,10 @@
-import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
+/* eslint-disable no-undef */
 import twilio from 'twilio';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const envfile = path.join(__dirname, '../.env');
-dotenv.config({ path: envfile });
 
 /**
  * Get twilio client instance
+ *
+ * @return {string}
  */
 export function getTwilioClient() {
   const accountSid = process.env.TWILLIO_ACCOUNT_SID || 'your_account_sid';
