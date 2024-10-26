@@ -14,6 +14,23 @@ function createVerificationCode() {
 }
 
 /**
+ * Send verification code to entered phone number
+ *
+ * @param {string} verificationCode Verification code
+ * @param {string} toPhone To phone number
+ *
+ * @return {void}
+ */
+async function sendSMS(verificationCode = '', toPhone = '') {
+  const smsClent = getTwilioClient();
+  await smsClent.messages.create({
+    from: process.env.TWILIOFROMPHONE,
+    to: toPhone,
+    body: 'Your verification code: ' + verificationCode,
+  });
+}
+
+/**
  * Handle phone number register request
  *
  * @param {Object} req - The Express request object.
@@ -27,23 +44,18 @@ async function handleRequest(req, res) {
   try {
     const phoneNumber =
       typeof req?.body?.phoneNumber === 'string' ? req.body.phoneNumber : '';
-    // const smsClent = getTwilioClient();
-    // await smsClent.messages.create({
-    //   from: '+918281884375',
-    //   to: '+919747624733',
-    //   body: 'Message 1',
-    // });
+    const verificationCode = createVerificationCode();
+    sendSMS(verificationCode, phoneNumber);
     const dataObj = await PhoneModal.findOne(
       { phoneNumber, isVerified: true },
       { _id: 0, phoneNumber: 1, isVerified: 1 }
     );
-    console.log({ dataObj1: dataObj });
     if (dataObj) {
       throw new Error('This phone number is already verified.');
     }
     const phoneTbl = new PhoneModal({
       phoneNumber,
-      verificationCode: createVerificationCode(),
+      verificationCode,
     });
 
     phoneTbl.save();
